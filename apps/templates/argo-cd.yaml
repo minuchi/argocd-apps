@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  destination:
+    server: {{ .Values.spec.destination.server }}
+    namespace: argocd
+  source:
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: 6.10.2
+    chart: argo-cd
+    helm:
+      releaseName: argocd
+      {{- $files := .Files }}
+      values: |
+        {{- $files.Get "conf/argo-cd.yaml" | nindent 12 }}
+  syncPolicy:
+    {{- toYaml .Values.argocd.autoSyncPolicy | nindent 8 }}
