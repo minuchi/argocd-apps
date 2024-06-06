@@ -12,7 +12,9 @@ spec:
     namespace: argocd
   source:
     repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: 6.10.2
+    # NOTE: version 7.1.2 is not working
+    # https://github.com/argoproj/argo-cd/issues/18356
+    targetRevision: 7.1.1
     chart: argo-cd
     helm:
       releaseName: argocd
