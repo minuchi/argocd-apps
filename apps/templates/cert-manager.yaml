@@ -16,5 +16,7 @@ spec:
     chart: cert-manager
     helm:
       releaseName: cert-manager
+      valuesObject:
+        installCRDs: true
   syncPolicy:
     {{- toYaml .Values.argocd.autoSyncPolicy | nindent 8 }}
