@@ -16,7 +16,8 @@ spec:
     chart: signoz
     helm:
       releaseName: signoz
-      valuesObject:
-        installCRDs: true
+      {{- $files := .Files }}
+      values: |
+        {{- $files.Get "conf/signoz.yaml" | nindent 12 }}
   syncPolicy:
     {{- toYaml .Values.argocd.autoSyncPolicy | nindent 8 }}
