@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: signoz-k8s-infra
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  destination:
+    server: {{ .Values.spec.destination.server }}
+    namespace: platform
+  source:
+    repoURL: https://charts.signoz.io
+    targetRevision: 0.15.0
+    chart: k8s-infra
+    helm:
+      releaseName: k8s-infra
+      {{- $files := .Files }}
+      values: |
+        {{- $files.Get "conf/signoz-k8s-infra.yaml" | nindent 12 }}
+  syncPolicy:
+    {{- toYaml .Values.argocd.autoSyncPolicy | nindent 8 }}
