@@ -1,4 +1,4 @@
-frontend:
+signoz:
   ingress:
     enabled: true
     ingressClassName: traefik
@@ -7,7 +7,7 @@ frontend:
         paths:
           - path: /
             pathType: ImplementationSpecific
-            port: 3301
+            port: 8080
     tls:
       - hosts:
           - signoz.k8s.minwoo.kim
