@@ -1,7 +1,7 @@
 signoz:
   ingress:
     enabled: true
-    ingressClassName: traefik
+    className: traefik
     hosts:
       - host: signoz.k8s.minwoo.kim
         paths:
@@ -12,3 +12,13 @@ signoz:
       - hosts:
           - signoz.k8s.minwoo.kim
         secretName: k8s-minwoo-kim-tls
+otelCollector:
+  ingress:
+    enabled: true
+    className: traefik
+    hosts:
+      - host: signoz-otel-collector.k8s.minwoo.kim
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            port: 4318
