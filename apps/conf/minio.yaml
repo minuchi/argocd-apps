@@ -1,0 +1,31 @@
+mode: standalone
+
+replicas: 1
+
+resources:
+  requests:
+    memory: 512Mi
+
+persistence:
+  enabled: true
+  size: 10Gi
+
+consoleIngress:
+  enabled: true
+  ingressClassName: traefik
+  hosts:
+    - minio-console.k8s.minwoo.kim
+  tls:
+    - hosts:
+        - minio-console.k8s.minwoo.kim
+      secretName: k8s-minwoo-kim-tls
+
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  hosts:
+    - minio.k8s.minwoo.kim
+  tls:
+    - hosts:
+        - minio.k8s.minwoo.kim
+      secretName: k8s-minwoo-kim-tls
