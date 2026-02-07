@@ -1,0 +1,60 @@
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    memory: 512Mi
+
+postgresql-ha:
+  enabled: false
+
+postgresql:
+  enabled: true
+  global:
+    postgresql:
+      auth:
+        password: gitea
+        database: gitea
+        username: gitea
+  primary:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        memory: 512Mi
+    persistence:
+      enabled: true
+      size: 10Gi
+
+valkey-cluster:
+  enabled: false
+
+valkey:
+  enabled: true
+  architecture: standalone
+  master:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 128Mi
+
+ingress:
+  enabled: true
+  className: traefik
+  hosts:
+    - host: git.k8s.minwoo.kim
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: git.minwoo.kim
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - git.k8s.minwoo.kim
+        - git.minwoo.kim
+      secretName: k8s-minwoo-kim-tls

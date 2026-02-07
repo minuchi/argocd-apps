@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitea
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  destination:
+    server: {{ .Values.spec.destination.server }}
+    namespace: gitea
+  source:
+    repoURL: https://dl.gitea.com/charts/
+    targetRevision: 12.5.0
+    chart: gitea
+    helm:
+      releaseName: gitea
+      {{- $files := .Files }}
+      values: |
+        {{- $files.Get "conf/gitea.yaml" | nindent 12 }}
+  syncPolicy:
+    {{- toYaml .Values.argocd.autoSyncPolicy | nindent 8 }}
