@@ -1,0 +1,32 @@
+extraEnv:
+  WEBHOOK_URL: "https://n8n.minwoo.kim/"
+
+persistence:
+  enabled: true
+  type: dynamic
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    memory: 512Mi
+
+ingress:
+  enabled: true
+  className: traefik
+  hosts:
+    - host: n8n.k8s.minwoo.kim
+      paths:
+        - /
+    - host: n8n.minwoo.kim
+      paths:
+        - /
+  tls:
+    - hosts:
+        - n8n.k8s.minwoo.kim
+        - n8n.minwoo.kim
+      secretName: k8s-minwoo-kim-tls

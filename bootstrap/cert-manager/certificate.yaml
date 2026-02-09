@@ -16,3 +16,4 @@ spec:
     - "k8s.minwoo.kim"
     - "*.k8s.minwoo.kim"
     - "git.minwoo.kim"
+    - "n8n.minwoo.kim"

@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: n8n
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  destination:
+    server: {{ .Values.spec.destination.server }}
+    namespace: n8n
+  source:
+    repoURL: https://riatlas.github.io/chart__n8n
+    targetRevision: 0.23.0
+    chart: n8n
+    helm:
+      releaseName: n8n
+      {{- $files := .Files }}
+      values: |
+        {{- $files.Get "conf/n8n.yaml" | nindent 12 }}
+  syncPolicy:
+    {{- toYaml .Values.argocd.autoSyncPolicy | nindent 8 }}
