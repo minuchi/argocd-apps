@@ -15,5 +15,6 @@ spec:
   dnsNames:
     - "k8s.minwoo.kim"
     - "*.k8s.minwoo.kim"
+    - "argocd.minwoo.kim"
     - "git.minwoo.kim"
     - "n8n.minwoo.kim"

@@ -11,4 +11,5 @@ server:
     extraTls:
       - hosts:
           - argocd.k8s.minwoo.kim
+          - argocd.minwoo.kim
         secretName: k8s-minwoo-kim-tls
